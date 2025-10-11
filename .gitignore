@@ -1,0 +1,13 @@
+# Compiled Code
+*.class
+bin/
+
+# Dependencies (the MySQL JAR)
+lib/*.jar
+
+# Operating System Files
+.DS_Store
+
+# VS Code / IDE files
+.vscode/
+*.iml
