@@ -1,12 +1,17 @@
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class ChatAppCLI {
     public static void main(String[] args) throws IOException {
         List<String> messages = new ArrayList<>();
         StringBuilder input = new StringBuilder();
+        Scanner sc = new Scanner(System.in);
         int terminalRows = 20; // you can calculate dynamically too
+        System.out.print("Enter username: ");
+        String user = sc.nextLine();
+        sc.close();
 
         while (true) {
             // Clear screen
@@ -26,7 +31,7 @@ public class ChatAppCLI {
             int ch = System.in.read();
             if (ch == '\n' || ch == '\r') {
                 if (input.length() > 0) {
-                    messages.add("You: " + input.toString());
+                    messages.add(user + ":" + input.toString());
                     input.setLength(0);
                 }
             } else if (ch == 127 || ch == 8) { // backspace
@@ -36,5 +41,6 @@ public class ChatAppCLI {
                 input.append((char) ch);
             }
         }
+
     }
 }

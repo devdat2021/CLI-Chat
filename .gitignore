@@ -1,13 +1,25 @@
-# Compiled Code
-*.class
+# --- Build Outputs ---
 bin/
+*.class
 
-# Dependencies (the MySQL JAR)
+# --- Dependencies ---
 lib/*.jar
 
-# Operating System Files
-.DS_Store
+# --- Eclipse Specific ---
+.metadata/
+.classpath
+.project
+.settings/
 
-# VS Code / IDE files
+# --- VS Code / IntelliJ / Other IDEs ---
 .vscode/
 *.iml
+.idea/
+
+# --- OS Files ---
+.DS_Store
+Thumbs.db
+
+# --- Logs / Temporary Files ---
+*.log
+*.tmp
