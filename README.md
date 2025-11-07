@@ -40,15 +40,7 @@ CREATE TABLE messages (
 );
 ```
 
-#### Setup Instructions:
-
-1.  **Edit the Setup Script:** Open the provided `setup_db_env.sh` (Linux/macOS) or `setup_db_env.bat` (Windows) file.
-2.  **Replace Placeholders:** Replace the placeholder values with your actual database details.
-3.  **Run the Script:** Execute the script in your terminal. This sets the environment variables for your current session.
-      * **Linux/macOS:** `source ./setup_db_env.sh`
-      * **Windows:** `.\setup_db_env.bat`
-
-### 3\. Compile and Run
+### 2\. Compile and Run
 
 1.  **Clone the Repository:**
     ```bash
