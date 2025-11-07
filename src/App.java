@@ -34,6 +34,8 @@ class MessageFetch extends Thread {
 
             } catch (SQLException e) {
                 System.out.println("Database error occurred!");
+                System.out.println("Database error occurred! -> " + e.getMessage());
+                break;
             } catch (InterruptedException e) {
                 System.out.println("Thread interrupted.");
                 break;
