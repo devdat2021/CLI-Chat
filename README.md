@@ -40,16 +40,6 @@ CREATE TABLE messages (
 );
 ```
 
-### 2\. Configure Credentials (Securely)
-
-Instead of hardcoding credentials, this application uses **Environment Variables** (`System.getenv()`) for connection security.
-
-| Variable | Example Value | Purpose |
-| :--- | :--- | :--- |
-| `CHAT_DB_URL` | `jdbc:mysql://[YOUR_SERVER_IP]:3306/Chatapp` | Database connection string. |
-| `CHAT_DB_USER` | `chat_user` | **CRITICAL:** Must be a non-root user with limited permissions. |
-| `CHAT_DB_PASS` | `YourSecretPassword` | Password for the chat database user. |
-
 #### Setup Instructions:
 
 1.  **Edit the Setup Script:** Open the provided `setup_db_env.sh` (Linux/macOS) or `setup_db_env.bat` (Windows) file.
@@ -62,7 +52,7 @@ Instead of hardcoding credentials, this application uses **Environment Variables
 
 1.  **Clone the Repository:**
     ```bash
-    git clone [REPO_URL]
+    git clone https://github.com/devdat2021/CLI-Chat
     cd CLI-Chat
     ```
 2.  **Download JDBC Driver:** Ensure you have the MySQL JDBC Connector (`mysql-connector-java-[version].jar`) and place it in a location accessible to your build system.
