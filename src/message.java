@@ -26,9 +26,14 @@ public class message {
     public void fetchmessage() {
         final String BOLD = "\u001B[1m";
         final String RESET = "\u001B[0m";
+        System.out.print("\r"); // move cursor to line start
+        System.out.print("\033[K"); // clear line
         String time = timestamp.format(DateTimeFormatter.ofPattern("HH:mm:ss"));
         String output = "[" + time + "] " + BOLD + colorCode + username + RESET + " : " + messageText;
         System.out.println(output);
+        System.out.flush();
+        System.out.print("> ");
+
     }
 
     public void writemessage(Connection conn) throws SQLException {

@@ -1,15 +1,50 @@
-import java.sql.Connection;
-import java.sql.Statement;
 import java.time.LocalDateTime;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.*;
 
+class MessageFetch extends Thread {
+    private Connection conn;
+    private static String SELECT_QUERY = "SELECT * FROM messages WHERE id > ? ORDER BY id ASC";
+
+    public MessageFetch(Connection conn) {
+        this.conn = conn;
+    }
+
+    public void run() {
+        while (true) {
+            try {
+                PreparedStatement ps = conn.prepareStatement(SELECT_QUERY);
+                ps.setInt(1, App.id);
+                ResultSet rs = ps.executeQuery();
+
+                while (rs.next()) {
+                    String username = rs.getString("username");
+                    LocalDateTime time = rs.getObject("timestamp", LocalDateTime.class);
+                    String color = rs.getString("color_code");
+                    String text = rs.getString("message_text");
+                    message msg = new message(username, text, color, time);
+                    msg.fetchmessage();
+
+                    App.id = rs.getInt("id");
+                }
+
+                rs.close();
+                ps.close();
+                Thread.sleep(1300);
+
+            } catch (SQLException e) {
+                System.out.println("Database error occurred!");
+            } catch (InterruptedException e) {
+                System.out.println("Thread interrupted.");
+                break;
+            }
+
+        }
+    }
+}
+
 public class App {
-
-    private static String SELECT_QUERY = "SELECT * FROM messages WHERE id > 0 ORDER BY id ASC";
     public static int id = 0;
-
     private static final String[] COLORS = {
             "\u001B[31m", // Red
             "\u001B[32m", // Green
@@ -36,32 +71,13 @@ public class App {
         String uname = sc.nextLine();
         String ucolor = getRandomColor();
 
-        try (Connection conn = DBConnection.getConnection();
-                Statement stmt = conn.createStatement();
-                ResultSet rs = stmt.executeQuery(SELECT_QUERY)) {
-
+        try (Connection conn = DBConnection.getConnection();) {
             System.out.println("--- Chat room (Live) ---");
-
-            boolean hasMessages = false;
-
-            while (rs.next()) {
-                String username = rs.getString("username");
-                LocalDateTime time = rs.getObject("timestamp", LocalDateTime.class);
-                String color = rs.getString("color_code");
-                String text = rs.getString("message_text");
-
-                message msg = new message(username, text, color, time);
-                msg.fetchmessage();
-
-                id = rs.getInt("id");
-                hasMessages = true;
-            }
-            if (!hasMessages) {
-                System.out.println("No messages.");
-            }
+            MessageFetch reciever = new MessageFetch(conn);
+            reciever.start();
 
             while (true) {
-                System.out.print("> ");
+
                 String text = sc.nextLine();
 
                 if (text.equalsIgnoreCase("exit"))
