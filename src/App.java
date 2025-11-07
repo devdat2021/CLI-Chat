@@ -33,14 +33,14 @@ public class App {
     public static void main(String[] args) throws InterruptedException {
         Scanner sc = new Scanner(System.in);
         System.out.print("Enter username: ");
-        sc.nextLine();
+        String uname = sc.nextLine();
         String ucolor = getRandomColor();
 
         try (Connection conn = DBConnection.getConnection();
                 Statement stmt = conn.createStatement();
                 ResultSet rs = stmt.executeQuery(SELECT_QUERY)) {
 
-            System.out.println("--- Results from Database ---");
+            System.out.println("--- Chat room (Live) ---");
 
             boolean hasMessages = false;
 
@@ -58,6 +58,17 @@ public class App {
             }
             if (!hasMessages) {
                 System.out.println("No messages.");
+            }
+
+            while (true) {
+                System.out.print("> ");
+                String text = sc.nextLine();
+
+                if (text.equalsIgnoreCase("exit"))
+                    break; // allow quitting
+
+                message msg = new message(uname, text, ucolor);
+                msg.writemessage(conn);
             }
 
         } catch (SQLException e) {
