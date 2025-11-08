@@ -7,10 +7,13 @@ class MessageFetch extends Thread {
     private Connection conn;
     private static String SELECT_QUERY = "SELECT * FROM messages WHERE id > ? ORDER BY id ASC";
     private String CurrentUser;
+    private String CurrentColor;
 
-    public MessageFetch(Connection conn,String CurrentUser) {
+    public MessageFetch(Connection conn,String CurrentColor,String CurrentUser) {
         this.conn = conn;
+        this.CurrentColor=CurrentColor;
         this.CurrentUser=CurrentUser;
+        
     }
 
     public void run() {
@@ -27,7 +30,7 @@ class MessageFetch extends Thread {
                     String text = rs.getString("message_text");
                    
                     message msg = new message(username, text, color, time);
-                    msg.fetchmessage(CurrentUser);
+                    msg.fetchmessage(CurrentColor,CurrentUser);
 
                     App.id = rs.getInt("id");
                 }
@@ -73,13 +76,14 @@ public class App {
         Scanner sc = new Scanner(System.in);
         System.out.print("Enter username: ");
         String uname = sc.nextLine();
-        String CurrentUser = uname;
+        String CurrentUser =uname;
         String ucolor = getRandomColor();
+        String CurrentColor = ucolor;
         Console console = System.console();
 
         try (Connection conn = DBConnection.getConnection();) {
             System.out.println("--- Chat room (Live) ---");
-            MessageFetch reciever = new MessageFetch(conn, CurrentUser);
+            MessageFetch reciever = new MessageFetch(conn, CurrentColor,CurrentUser);
             reciever.start();
 
             while (true) {
