@@ -30,7 +30,9 @@ class MessageFetch extends Thread {
                     String text = rs.getString("message_text");
                    
                     message msg = new message(username, text, color, time);
-                    msg.fetchmessage(CurrentColor,CurrentUser);
+                   msg.fetchmessage(CurrentColor,CurrentUser);
+
+                   
 
                     App.id = rs.getInt("id");
                 }
@@ -51,6 +53,7 @@ class MessageFetch extends Thread {
 }
 
 public class App {
+
     public static int id = 0;
     private static final String[] COLORS = {
             "\u001B[31m", // Red
@@ -72,7 +75,25 @@ public class App {
         return COLORS[rand.nextInt(COLORS.length)];
     }
 
-    public static void main(String[] args) throws InterruptedException {
+     // ANSI CODES
+    private static final String SAVE = "\u001B[s";
+    private static final String REST = "\u001B[u";
+    private static final String CLR  = "\u001B[K";
+
+    private static StringBuilder input = new StringBuilder();
+
+      public static synchronized void printIncoming(String msg) {
+        System.out.print(SAVE);       // save cursor
+        System.out.print("\r\n");     // move to new line
+        System.out.println(msg);      // print message
+        System.out.print(REST);       // restore cursor
+        System.out.print(CLR);        // clear junk
+        System.out.print("> " + input); // redraw input
+        System.out.flush();
+    }
+
+
+    public static void main(String[] args) throws Exception {
         Scanner sc = new Scanner(System.in);
         System.out.print("Enter username: ");
         String uname = sc.nextLine();
@@ -85,19 +106,88 @@ public class App {
             System.out.println("--- Chat room (Live) ---");
             MessageFetch reciever = new MessageFetch(conn, CurrentColor,CurrentUser);
             reciever.start();
-
+          // String text;
             while (true) {
                 
+            //     if (System.in.available()>0){
+            //         char c = (char) System.in.read();
+
+            //         if(c=='\n'){
+            //             text = input.toString();
+            //             input.setLength(0);
+
+            //             if (text.equalsIgnoreCase("exit")){
+            //         break; // allow quitting
+            //     }
+
+            //     message msg = new message(uname, text, ucolor);
+            //     msg.writemessage(conn);
+            //     System.out.println();
+            //     continue;
+            //  }
+
+            //  if(c==127 || c==8){
+            //     if (input.length()>0){
+            //         input.setLength(input.length()-1);
+            //         System.out.print("\b \b");
+
+            //     }
+            //     continue;
+            //  }
+            //  input.append(c);
+            //  System.out.print(c);
+
+
+            //   }
+
+            //   Thread.sleep(10);
 
                 String text = sc.nextLine();
                 //String text = console.readLine("msg:");
 
-
-                if (text.equalsIgnoreCase("exit"))
+                        if (text.equalsIgnoreCase("exit")){
                     break; // allow quitting
+                }else if (text.equalsIgnoreCase("/list")){
+                    System.out.println("/red /butterfly");
+                }
+                else if (text.equalsIgnoreCase("/butterfly")) {
+                   text = "\n⣠⣤⣤⡤⠤⢤⣤⣀⡀⠀⠐⠒⡄⠀⡠⠒⠀⠀⢀⣀⣤⠤⠤⣤⣤⣤⡄\n" + //
+                                              "⠈⠻⣿⡤⠤⡏⠀⠉⠙⠲⣄⠀⢰⢠⠃⢀⡤⠞⠋⠉⠈⢹⠤⢼⣿⠏⠀\n" + //
+                                              "⠀⠀⠘⣿⡅⠓⢒⡤⠤⠀⡈⠱⣄⣼⡴⠋⡀⠀⠤⢤⡒⠓⢬⣿⠃⠀⠀\n" + //
+                                              "⠀⠀⠀⠹⣿⣯⣐⢷⣀⣀⢤⡥⢾⣿⠷⢥⠤⣀⣀⣞⣢⣽⡿⠃⠀⠀⠀\n" + //
+                                              "⠀⠀⠀⠀⠈⢙⣿⠝⠀⢁⠔⡨⡺⡿⡕⢔⠀⡈⠐⠹⣟⠋⠀⠀⠀⠀⠀\n" + //
+                                              "⠀⠀⠀⠀⠀⢼⣟⢦⢶⢅⠜⢰⠃⠀⢹⡌⢢⣸⠦⠴⣿⡇⠀⠀⠀⠀⠀\n" + //
+                                              "⠀⠀⠀⠀⠀⠘⣿⣇⡬⡌⢀⡟⠀⠀⠀⢷⠀⣧⢧⣵⣿⠂⠀⠀⠀⠀⠀\n" + //
+                                              "⠀⠀⠀⠀⠀⠀⠈⢻⠛⠋⠉⠀⠀⠀⠀⠈⠉⠙⢻⡏⠀⠀⠀⠀⠀⠀⠀\n" + //
+                                              "⠀⠀⠀⠀⠀⠀⢰⡿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⠄⠀⠀⠀⠀⠀⠀";
+                                              System.out.println(text);
+                    
+                }else if(text.equalsIgnoreCase("/red")){
+                    text = "\n⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n" + //
+                                                "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣼⢻⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n" + //
+                                                "⠀⠀⠀⠀⠀⠀⠀⠀⢤⣄⣀⣀⣀⣰⡇⠈⣧⣀⣀⣀⣀⣀⠀⠀⠀⠀⠀⠀⠀⠀\n" + //
+                                                "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠻⢦⡀⠀⠀⠀⠀⢀⣠⠾⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀\n" + //
+                                                "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣹⠃⠀⡀⠀⢿⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n" + //
+                                                "⠀⠀⠀⠀⠀⣠⠔⠂⠀⠀⠀⢠⣏⣴⠞⠛⢦⣜⣧⠀⠀⠀⠀⠢⣄⡀⠀⠀⠀⠀\n" + //
+                                                "⠀⠀⢠⣖⡿⡋⠀⠀⠀⠀⠀⠾⠋⠀⠀⠀⠀⠉⠻⡄⠀⠀⠀⠀⢝⢿⣱⣄⠀⠀\n" + //
+                                                "⠀⡜⣿⣨⡾⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠲⣤⡀⠀⠀⠀⠀⠀⠈⢳⣇⣿⢡⠀\n" + //
+                                                "⢰⣇⣟⣵⠃⠀⠀⠀⠀⠀⠀⢀⣴⣦⡤⠀⠀⠈⠻⣷⡀⠀⠀⠀⠀⠈⣯⡻⢸⡆\n" + //
+                                                "⡆⣿⡾⡅⠀⠀⠀⠀⠀⢀⣴⣿⣿⣏⠀⠀⠀⠀⠀⠹⣿⡆⠀⠀⠀⠀⢨⢻⣾⢱\n" + //
+                                                "⣷⡘⣱⠇⠀⠀⠀⠀⠀⠀⠹⠋⠈⠻⣷⣄⠀⠀⠀⠀⣿⣿⠀⠀⠀⠀⠘⣧⢋⣾\n" + //
+                                                "⡼⣷⡿⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠻⣷⣄⠀⢀⣿⣿⠀⠀⠀⠀⢰⢻⣾⢇\n" + //
+                                                "⢳⣌⠇⣿⠀⠀⠀⠀⠀⠀⣴⢶⣤⣀⡀⠀⠈⢻⣷⣾⣿⠏⠀⠀⠀⠀⣿⠸⣡⡞\n" + //
+                                                "⠀⡿⢷⣿⡸⣄⠀⢀⣴⡾⠉⠀⠈⠛⠿⢿⣿⣿⡿⠿⣷⣄⠀⠀⢠⡇⣿⡾⢛⠀\n" + //
+                                                "⠀⠘⢦⣝⡣⢿⡦⡈⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⠋⢀⣴⡿⣘⣭⡶⠃⠀\n" + //
+                                                "⠀⠀⠀⠹⣛⠿⠷⡹⣦⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⢟⠾⠟⣛⠝⠀⠀⠀\n" + //
+                                                "⠀⠀⠀⠀⠈⠛⡿⠿⠶⢛⣫⣤⡶⣒⡶⠶⣖⠶⣶⣍⣛⠚⠿⣟⠛⠁⠀⠀⠀⠀\n" + //
+                                                "⠀⠀⠀⠀⠀⠀⠈⠙⠛⠛⠋⢡⠞⠁⠀⠀⠈⠻⣮⠙⠛⠛⠋⠁⠀⠀⠀⠀⠀⠀";
+                                                System.out.println(text);
+                }
 
-                message msg = new message(uname, text, ucolor);
+                     message msg = new message(uname, text, ucolor);
                 msg.writemessage(conn);
+                
+                
             }
 
         } catch (SQLException e) {

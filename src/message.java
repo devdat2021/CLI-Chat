@@ -24,6 +24,23 @@ public class message {
         this.timestamp = (timestamp != null) ? timestamp : LocalDateTime.now();
     }
 
+    //public String buff(){
+
+   // }
+
+   public String format(String currentColor, String currentUser) {
+    final String BOLD = "\u001B[1m";
+    final String RESET = "\u001B[0m";
+    String time = timestamp.format(DateTimeFormatter.ofPattern("HH:mm:ss"));
+
+    if(colorCode.equals(currentColor) && username.equals(currentUser)) {
+        return null;
+    }
+
+    return "[" + time + "] " + BOLD + colorCode + username + RESET + " : " + messageText;
+}
+
+
     public void fetchmessage(String CurrentColor,String CurrentUser) {
        
         final String BOLD = "\u001B[1m";
@@ -33,12 +50,13 @@ public class message {
         String time = timestamp.format(DateTimeFormatter.ofPattern("HH:mm:ss"));
 
 
-        if((!(colorCode.equals(CurrentColor)))&&(!(username.equals(CurrentUser)))){
+        if(! ( (colorCode.equals(CurrentColor)) && (username.equals(CurrentUser)) )){
         String output = "[" + time + "] " + BOLD + colorCode + username + RESET + " : " + messageText;
        
-        System.out.println(output);}
-        System.out.print("[" + time + "] " + BOLD + colorCode +"YOU"+ RESET + " : ");
-       
+        System.out.println(output);
+         }
+        System.out.print("[" + time + "] " + BOLD + CurrentColor +"YOU"+ RESET + " : ");
+     //  buff();
         System.out.flush();
 
     }
