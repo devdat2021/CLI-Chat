@@ -25,7 +25,7 @@ Before running, you must set up the `Chatapp` database and create a table for me
 | `color_code` | `VARCHAR` | ANSI code for username color. |
 | `timestamp` | `DATETIME / TIMESTAMP` | Timestamp of the message (set by the database). |
 
-#### Example SQL Schema:
+#### SQL Schema:
 
 ```sql
 CREATE DATABASE IF NOT EXISTS Chatapp;

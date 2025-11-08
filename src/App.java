@@ -33,7 +33,6 @@ class MessageFetch extends Thread {
                 Thread.sleep(1300);
 
             } catch (SQLException e) {
-                System.out.println("Database error occurred!");
                 System.out.println("Database error occurred! -> " + e.getMessage());
                 break;
             } catch (InterruptedException e) {
@@ -82,12 +81,14 @@ public class App {
 
                 String text = sc.nextLine();
 
-                if (text.equalsIgnoreCase("exit"))
+                if (text.equalsIgnoreCase("exit")) {
+                    reciever.interrupt();
                     break; // allow quitting
-
+                }
                 message msg = new message(uname, text, ucolor);
                 msg.writemessage(conn);
             }
+            reciever.join();
 
         } catch (SQLException e) {
             System.err.println("Database operation failed!");
