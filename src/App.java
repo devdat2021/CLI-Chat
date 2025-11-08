@@ -1,13 +1,16 @@
-import java.time.LocalDateTime;
+import java.io.*;
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.*;
 
 class MessageFetch extends Thread {
     private Connection conn;
     private static String SELECT_QUERY = "SELECT * FROM messages WHERE id > ? ORDER BY id ASC";
+    private String CurrentUser;
 
-    public MessageFetch(Connection conn) {
+    public MessageFetch(Connection conn,String CurrentUser) {
         this.conn = conn;
+        this.CurrentUser=CurrentUser;
     }
 
     public void run() {
@@ -22,8 +25,9 @@ class MessageFetch extends Thread {
                     LocalDateTime time = rs.getObject("timestamp", LocalDateTime.class);
                     String color = rs.getString("color_code");
                     String text = rs.getString("message_text");
+                   
                     message msg = new message(username, text, color, time);
-                    msg.fetchmessage();
+                    msg.fetchmessage(CurrentUser);
 
                     App.id = rs.getInt("id");
                 }
@@ -69,16 +73,21 @@ public class App {
         Scanner sc = new Scanner(System.in);
         System.out.print("Enter username: ");
         String uname = sc.nextLine();
+        String CurrentUser = uname;
         String ucolor = getRandomColor();
+        Console console = System.console();
 
         try (Connection conn = DBConnection.getConnection();) {
             System.out.println("--- Chat room (Live) ---");
-            MessageFetch reciever = new MessageFetch(conn);
+            MessageFetch reciever = new MessageFetch(conn, CurrentUser);
             reciever.start();
 
             while (true) {
+                
 
                 String text = sc.nextLine();
+                //String text = console.readLine("msg:");
+
 
                 if (text.equalsIgnoreCase("exit"))
                     break; // allow quitting
