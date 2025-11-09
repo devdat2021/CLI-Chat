@@ -11,6 +11,29 @@ A **Java** project that implements a simple **live chat room** using **Multi-thr
 
 -----
 
+## ⚙️ Features
+
+✅ Real-time message retrieval using multi-threading
+✅ ANSI colorized usernames for visual distinction
+✅ Lightweight, no-login session system (username entered at runtime)
+✅ Database-backed message storage and retrieval
+✅ Auto-timestamped messages handled by MySQL
+✅ Simple console-based interface for quick communication
+
+-----
+
+## 📸 Demo Preview
+
+```
+Enter username: Devdat
+--- Chat room (Live) ---
+[21:30:00]  Devdat : Hey everyone, this chat finally works!
+[21:31:10]  Aarav  : Nice! I was just testing the system.
+> 
+```
+
+-----
+
 ## 🚀 How to Run & Collaborate
 
 ### 1\. Database Setup (Admin)
@@ -50,3 +73,14 @@ CREATE TABLE messages (
 2.  **Download JDBC Driver:** Ensure you have the MySQL JDBC Connector (`mysql-connector-java-[version].jar`) and place it in a location accessible to your build system.
 3.  **Compile:** Compile the Java files (`App.java`, `message.java`, `DBConnection.java`).
 4.  **Run:** Execute the compiled `App` class, ensuring the JDBC driver is on the classpath.
+
+
+
+
+## 👨‍💻 Contributors
+
+* **[Devdat](https://github.com/devdat2021)** — Developer, Design & Core Logic
+* **[Pramukh](https://github.com/pramukhnayak7)** — Collaboration, Testing, and Bug Fixing
+
+----
+
