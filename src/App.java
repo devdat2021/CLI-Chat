@@ -46,6 +46,7 @@ class MessageFetch extends Thread {
 
 public class App {
     public static int id = 0;
+    public static String uname, ucolor;
     private static final String[] COLORS = {
             "\u001B[31m", // Red
             "\u001B[32m", // Green
@@ -69,8 +70,8 @@ public class App {
     public static void main(String[] args) throws InterruptedException {
         Scanner sc = new Scanner(System.in);
         System.out.print("Enter username: ");
-        String uname = sc.nextLine();
-        String ucolor = getRandomColor();
+        uname = sc.nextLine();
+        ucolor = getRandomColor();
 
         try (Connection conn = DBConnection.getConnection();) {
             System.out.println("--- Chat room (Live) ---");

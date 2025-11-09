@@ -29,9 +29,17 @@ public class message {
             System.out.print("\r"); // move to start of current line
             System.out.print("\033[K"); // clear line
             String time = timestamp.format(DateTimeFormatter.ofPattern("HH:mm:ss"));
-            String output = "[" + time + "] " + BOLD + colorCode + username + RESET + " : " + messageText;
-            System.out.println(output);
-            System.out.print("> ");
+
+            if (!((colorCode.equals(App.ucolor)) && (username.equals(App.uname)))) {
+                String output = "[" + time + "] " + BOLD + colorCode + username + RESET + " : " + messageText;
+
+                System.out.println(output);
+            }
+            System.out.print("[" + time + "] " + BOLD + App.ucolor + "YOU" + RESET + " : ");
+            // String output = "[" + time + "] " + BOLD + colorCode + username + RESET + " :
+            // " + messageText;
+            // System.out.println(output);
+            // System.out.print("> ");
             System.out.flush();
         }
 
