@@ -35,7 +35,7 @@ public class message {
 
                 System.out.println(output);
             }
-            System.out.print("[" + time + "] " + BOLD + App.ucolor + "YOU" + RESET + " : ");
+            System.out.print(BOLD + App.ucolor + "YOU" + RESET + " : ");
             // String output = "[" + time + "] " + BOLD + colorCode + username + RESET + " :
             // " + messageText;
             // System.out.println(output);
