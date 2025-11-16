@@ -28,10 +28,13 @@ public class message {
         synchronized (System.out) {
             System.out.print("\r"); // move to start of current line
             System.out.print("\033[K"); // clear line
-            // String time = timestamp.format(DateTimeFormatter.ofPattern("HH:mm:ss"));
             LocalDateTime localTime = timestamp.plusHours(5).plusMinutes(30); // shifting UTC time to IST
             String time = localTime.format(DateTimeFormatter.ofPattern("HH:mm:ss"));
-
+            if (LiveChat.ASCII_COMMANDS.contains(messageText.toLowerCase())) {
+                String output = "[" + time + "] " + BOLD + colorCode + username + RESET + " : ";
+                System.out.println(output);
+                extra.ascii(messageText);
+            }
             if (!((colorCode.equals(App.ucolor)) && (username.equals(App.uname)))) {
                 String output = "[" + time + "] " + BOLD + colorCode + username + RESET + " : " + messageText;
 
