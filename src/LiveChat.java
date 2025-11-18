@@ -36,7 +36,7 @@ class MessageFetch extends Thread {
                 System.out.println("Database error occurred! -> " + e.getMessage());
                 break;
             } catch (InterruptedException e) {
-                System.out.println("Thread interrupted.");
+                System.out.println("Chat disconnected!");
                 break;
             }
 
@@ -52,8 +52,7 @@ public class LiveChat {
             "/butterfly",
             "/aah",
             "/dance",
-            "/kitty",
-            "/sparkle");
+            "/kitty");
 
     public static void start(Scanner sc) throws InterruptedException {
         try (Connection conn = DBConnection.getConnection();) {

@@ -42,10 +42,6 @@ public class message {
                 }
             }
             System.out.print(BOLD + App.ucolor + "YOU" + RESET + " : ");
-            // String output = "[" + time + "] " + BOLD + colorCode + username + RESET + " :
-            // " + messageText;
-            // System.out.println(output);
-            // System.out.print("> ");
             System.out.flush();
         }
 

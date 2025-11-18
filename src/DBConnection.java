@@ -9,11 +9,8 @@ public class DBConnection {
     private static final String PASS = "devdat";
 
     public static Connection getConnection() throws SQLException {
-
         System.out.println("Attempting to connect to server...");
-
         Connection connection = DriverManager.getConnection(DB_URL, USER, PASS);
-
         System.out.println("Connection successful!");
         return connection;
     }
