@@ -2,6 +2,7 @@ public class extra {
   static void ascii(String text) {
     if (text.equalsIgnoreCase("/list")) {
       System.out.println("1. /red 2. /butterfly 3. /aah 4. /dance 5. /kitty");
+      return;
     } else if (text.equalsIgnoreCase("/butterfly")) {
       text = "\n⣠⣤⣤⡤⠤⢤⣤⣀⡀⠀⠐⠒⡄⠀⡠⠒⠀⠀⢀⣀⣤⠤⠤⣤⣤⣤⡄\n" + //
           "⠈⠻⣿⡤⠤⡏⠀⠉⠙⠲⣄⠀⢰⢠⠃⢀⡤⠞⠋⠉⠈⢹⠤⢼⣿⠏⠀\n" + //

@@ -47,6 +47,7 @@ class MessageFetch extends Thread {
 public class LiveChat {
     public static int id = 0;
     public static final Set<String> ASCII_COMMANDS = Set.of(
+            "/list",
             "/red",
             "/butterfly",
             "/aah",
@@ -64,18 +65,18 @@ public class LiveChat {
 
                 String text = sc.nextLine();
 
-                if (ASCII_COMMANDS.contains(text.toLowerCase())) {
-                    extra.ascii(text);
-                }
                 if (text.equalsIgnoreCase("exit")) {
                     reciever.interrupt();
                     break; // allow quitting
                 }
                 message msg = new message(App.uname, text, App.ucolor);
                 msg.writemessage(conn);
+                if (ASCII_COMMANDS.contains(text.toLowerCase())) {
+                    extra.ascii(text);
+                }
 
-                reciever.join();
             }
+            reciever.join();
 
         } catch (SQLException e) {
             System.err.println("Database operation failed!");
