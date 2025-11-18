@@ -1,7 +1,29 @@
+import java.io.*;
+
 public class extra {
+  public static String getWeather(String city) {
+    StringBuilder output = new StringBuilder();
+    try {
+      Process process = Runtime.getRuntime().exec("curl wttr.in/" + city + "?0");
+      BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+
+      String line;
+      while ((line = reader.readLine()) != null) {
+        output.append(line).append("\n");
+      }
+
+      process.waitFor();
+
+    } catch (Exception e) {
+      return "Unable to fetch weather.";
+    }
+
+    return output.toString();
+  }
+
   static void ascii(String text) {
     if (text.equalsIgnoreCase("/list")) {
-      System.out.println("1. /red 2. /butterfly 3. /aah 4. /dance 5. /kitty");
+      System.out.println("ASCII Art: 1. /red 2. /butterfly 3. /aah 4. /dance 5. /kitty\n Functionality: 1. /weather ");
       return;
     } else if (text.equalsIgnoreCase("/butterfly")) {
       text = "\n⣠⣤⣤⡤⠤⢤⣤⣀⡀⠀⠐⠒⡄⠀⡠⠒⠀⠀⢀⣀⣤⠤⠤⣤⣤⣤⡄\n" + //
@@ -104,6 +126,14 @@ public class extra {
           "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢱⡄⠀⠀⠀⠹⡟⠒⢢⡀⠀⠀⠀⠀⢀⡏⠀⠀⠀⠈⠉⠉⠁⠀⠀⠀\n" +
           "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠹⣄⠀⠀⢀⡇⠀⠀⠻⣄⠀⠀⠀⡸⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n" +
           "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⢷⠶⠋⠀⠀⠀⠀⠈⣣⠶⠖⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀";
+    } else if (text.equalsIgnoreCase("/weather")) {
+      String city = "Mangalore"; // default city
+
+      String[] parts = text.split(" ");
+      if (parts.length > 1)
+        city = parts[1];
+
+      text = extra.getWeather(city);
     }
 
     System.out.println(text);

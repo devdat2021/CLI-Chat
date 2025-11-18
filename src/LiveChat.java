@@ -52,7 +52,8 @@ public class LiveChat {
             "/butterfly",
             "/aah",
             "/dance",
-            "/kitty");
+            "/kitty",
+            "/weather");
 
     public static void start(Scanner sc) throws InterruptedException {
         try (Connection conn = DBConnection.getConnection();) {
@@ -69,7 +70,8 @@ public class LiveChat {
                     break; // allow quitting
                 }
                 message msg = new message(App.uname, text, App.ucolor);
-                msg.writemessage(conn);
+                msg.writemessage(conn); // message insertion
+
                 if (ASCII_COMMANDS.contains(text.toLowerCase())) {
                     extra.ascii(text);
                 }
