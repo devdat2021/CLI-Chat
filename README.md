@@ -43,8 +43,14 @@ Use these commands inside the **Live Chat** to trigger special effects:
 
 ## 📸 Demo Preview
 
-```
+```text
 Enter username: Devdat
+Select mode:
+1. Live Chat
+2. AI Chat
+Enter choice: 1
+Attempting to connect to server...
+Connection successful!
 --- Chat room (Live) ---
 [21:30:00]  Devdat : Hey everyone, this chat finally works!
 [21:31:10]  Pramukh  : Nice! I was just testing the system.
