@@ -11,7 +11,7 @@ A **Java** project that implements a simple **live chat room** using **Multi-thr
 
 -----
 
-## ⚙️ Features
+<!-- ## ⚙️ Features
 
 - ✅ Real-time message retrieval using multi-threading
 - ✅ ANSI colorized usernames for visual distinction
@@ -19,6 +19,25 @@ A **Java** project that implements a simple **live chat room** using **Multi-thr
 - ✅ Database-backed message storage and retrieval
 - ✅ Auto-timestamped messages handled by MySQL
 - ✅ Simple console-based interface for quick communication
+
+----- -->
+## ⚙️ Features
+
+### 🟢 Live Chat Mode
+- **Real-time Messaging:** Uses multi-threading to poll and display messages instantly.
+- **User Identification:** ANSI colorized usernames for visual distinction.
+- **Database Persistence:** All chats are stored in a MySQL database with auto-timestamps.
+- **Easter Eggs & Commands:** Special commands for fun visuals and utilities.
+
+### 🤖 AI Chat Mode
+- **Gemini Integration:** Chat directly with an AI bot (Gemini 2.5 Flash).
+Allowing for more enhanced user experience with the application.
+
+### 🎨 Easter Eggs & Utilities
+Use these commands inside the **Live Chat** to trigger special effects:
+- `/weather <city>` : Fetches current weather for the specified city (e.g., `/weather Mangalore`).
+- `/list` : Lists all available ASCII art commands.
+- **ASCII Art:** `/red`, `/butterfly`, `/aah`, `/dance`, `/kitty`
 
 -----
 
@@ -71,7 +90,7 @@ CREATE TABLE messages (
     cd CLI-Chat
     ```
 2.  **Download JDBC Driver:** Ensure you have the MySQL JDBC Connector (`mysql-connector-java-[version].jar`) and place it in a location accessible to your build system.
-3.  **Compile:** Compile the Java files (`App.java`, `message.java`, `DBConnection.java`).
+3.  **Compile:** Compile the Java files (`App.java`, `message.java`, `DBConnection.java`,`LiveChat.java`,`AIChat.java`,`extra.java`).
 4.  **Run:** Execute the compiled `App` class, ensuring the JDBC driver is on the classpath.
 
 
