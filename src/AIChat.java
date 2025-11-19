@@ -59,7 +59,7 @@ public class AIChat {
             // input.replace("\"", "\\\""));
 
             String systemPrompt = "You are CLIChatBot. Be friendly, helpful, and casual. " +
-                    "Never reply with more than 3 lines. Keep responses clear and simple.";
+                    "Preferrably reply with more than 3 lines. Keep responses clear and simple.";
             String jsonbody = String.format(
                     "{" +
                             " \"systemInstruction\": { \"parts\": [{ \"text\": \"%s\" }] }," +
