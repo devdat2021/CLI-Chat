@@ -3,69 +3,87 @@ import java.io.InputStreamReader;
 import java.util.*;
 
 public class AIChat {
+    private static String extractText(String json) {
+        String key = "\"text\":";
+        int index = json.indexOf(key);
+        if (index == -1)
+            return "Sorry I didn't catch that";
 
-        private static String extractText(String json) {
-    String key = "\"text\":";
-    int index = json.indexOf(key);
-    if (index == -1) return "(no text found)";
+        // Move to the first quote after "text":
+        int start = json.indexOf("\"", index + key.length()) + 1;
 
-    // Move to the first quote after "text":
-    int start = json.indexOf("\"", index + key.length()) + 1;
+        StringBuilder sb = new StringBuilder();
+        boolean escape = false;
 
-    StringBuilder sb = new StringBuilder();
-    boolean escape = false;
+        for (int i = start; i < json.length(); i++) {
+            char c = json.charAt(i);
 
-    for (int i = start; i < json.length(); i++) {
-        char c = json.charAt(i);
+            if (escape) {
+                if (c == 'n')
+                    sb.append('\n');
+                else
+                    sb.append(c);
+                escape = false;
+                continue;
+            }
 
-        if (escape) {
-            // Handle escaped characters like \" or \n
-            if (c == 'n') sb.append('\n');
-            else sb.append(c);
-            escape = false;
-            continue;
+            if (c == '\\') {
+                escape = true;
+                continue;
+            }
+
+            if (c == '"') {
+                // End of string
+                break;
+            }
+
+            sb.append(c);
         }
-
-        if (c == '\\') {
-            escape = true;
-            continue;
-        }
-
-        if (c == '"') {
-            // End of string
-            break;
-        }
-
-        sb.append(c);
+        return sb.toString();
     }
 
-    return sb.toString();
-}
-
-    public static void main(String[] args) throws Exception {
-        String apiKey = "Your API Key";
-
-        Scanner sc = new Scanner(System.in);
-
-        
+    public static void start(Scanner sc, String uname) throws Exception {
+        String apiKey = Secrets.Api;
+        System.out.println("Bot: " + "Hi! " + uname + " I am an AI bot here to chat with you");
 
         while (true) {
-            System.out.print("You: ");
+            // System.out.print("You: ");
+            message.sendtobot();
             String input = sc.nextLine();
+            if (input.equalsIgnoreCase("exit")) {
+                System.out.println("Goodbye!" + uname);
+                return; // allow quitting
+            }
+            // String jsonbody = String.format(
+            // "{\"contents\": [{\"parts\": [{\"text\": \"%s\"}]}]}",
+            // input.replace("\"", "\\\""));
 
+            String systemPrompt = "You are CLIChatBot. Be friendly, helpful, and casual. " +
+                    "Never reply with more than 3 lines. Keep responses clear and simple.";
             String jsonbody = String.format(
-                "{\"contents\": [{\"parts\": [{\"text\": \"%s\"}]}]}",
-                input.replace("\"", "\\\"")
+                    "{" +
+                            " \"systemInstruction\": { \"parts\": [{ \"text\": \"%s\" }] }," +
+                            " \"contents\": [ { \"parts\": [{ \"text\": \"%s\" }] } ]" +
+                            "}",
+                    systemPrompt.replace("\"", "\\\""), // Fills the first %s (System Prompt)
+                    input.replace("\"", "\\\"") // Fills the second %s (User Input)
             );
+            // String jsonbody = String.format(
+            // "{ \"contents\": [" +
+            // "{ \"role\": \"system\", \"parts\": [{ \"text\": \"%s\" }] }," +
+            // "{ \"role\": \"user\", \"parts\": [{ \"text\": \"%s\" }] }" +
+            // "] }",
+            // systemPrompt.replace("\"", "\\\""),
+            // input.replace("\"", "\\\""));
 
             ProcessBuilder pb = new ProcessBuilder(
-                "curl",
-                "-s",
-                "-X", "POST",
-                "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=" + apiKey,
-                "-H", "Content-Type: application/json",
-                "-d", jsonbody
-            );
+                    "curl",
+                    "-s",
+                    "-X", "POST",
+                    "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key="
+                            + apiKey,
+                    "-H", "Content-Type: application/json",
+                    "-d", jsonbody);
 
             Process p = pb.start();
             BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
@@ -77,19 +95,11 @@ public class AIChat {
             }
 
             String json = sb.toString();
-
-            // Extract the "text": "..."
             String aiText = extractText(json);
-
-            System.out.println("AI: " + aiText);
-            
-           
-            // System.out.print("AI:");
-            // p.getInputStream().transferTo(System.out);
-
-
+            // System.out.println("DEBUG - RAW JSON: " + json);
+            System.out.println("Bot: " + aiText);
             p.waitFor();
         }
-        
+
     }
 }

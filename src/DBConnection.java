@@ -4,9 +4,10 @@ import java.sql.SQLException;
 
 public class DBConnection {
 
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/Chatapp";
-    private static final String USER = "root";
-    private static final String PASS = "devdat";
+    private static final String DB_URL = Secrets.DB_URL;
+
+    private static final String USER = Secrets.USER;
+    private static final String PASS = Secrets.PASS;
 
     public static Connection getConnection() throws SQLException {
         System.out.println("Attempting to connect to server...");

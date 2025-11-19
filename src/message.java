@@ -8,6 +8,9 @@ public class message {
     private String colorCode;
     private LocalDateTime timestamp;
 
+    final static String BOLD = "\u001B[1m";
+    final static String RESET = "\u001B[0m";
+
     public message(String username, String message, String colorCode) {
         this.username = username;
         this.messageText = message;
@@ -23,8 +26,6 @@ public class message {
     }
 
     public void fetchmessage() {
-        final String BOLD = "\u001B[1m";
-        final String RESET = "\u001B[0m";
         synchronized (System.out) {
             System.out.print("\r"); // move to start of current line
             System.out.print("\033[K"); // clear line
@@ -45,6 +46,10 @@ public class message {
             System.out.flush();
         }
 
+    }
+
+    public static void sendtobot() {
+        System.out.print(BOLD + App.ucolor + "YOU" + RESET + " : ");
     }
 
     public void writemessage(Connection conn) throws SQLException {

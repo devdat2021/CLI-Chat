@@ -28,17 +28,21 @@ public class App {
         System.out.print("Enter username: ");
         uname = sc.nextLine();
         ucolor = getRandomColor();
-        // System.out.println("Select mode:");
-        // System.out.println("1. Live Chat");
-        // System.out.println("2. AI Chat");
-        // System.out.print("Enter choice: ");
-        int choice = 1; // sc.nextInt();
-        // sc.nextLine();
+        System.out.println("Select mode:");
+        System.out.println("1. Live Chat");
+        System.out.println("2. AI Chat");
+        System.out.print("Enter choice: ");
+        int choice = sc.nextInt();
+        sc.nextLine();
 
         if (choice == 1) {
             LiveChat.start(sc);
         } else if (choice == 2) {
-            System.out.println("AI Chat mode coming soon!");
+            try {
+                AIChat.start(sc, uname);
+            } catch (Exception e) {
+                System.out.println("Error occured: " + e.getMessage());
+            }
         } else {
             System.out.println("Invalid choice.");
         }
