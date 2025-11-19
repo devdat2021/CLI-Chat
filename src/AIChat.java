@@ -65,16 +65,8 @@ public class AIChat {
                             " \"systemInstruction\": { \"parts\": [{ \"text\": \"%s\" }] }," +
                             " \"contents\": [ { \"parts\": [{ \"text\": \"%s\" }] } ]" +
                             "}",
-                    systemPrompt.replace("\"", "\\\""), // Fills the first %s (System Prompt)
-                    input.replace("\"", "\\\"") // Fills the second %s (User Input)
-            );
-            // String jsonbody = String.format(
-            // "{ \"contents\": [" +
-            // "{ \"role\": \"system\", \"parts\": [{ \"text\": \"%s\" }] }," +
-            // "{ \"role\": \"user\", \"parts\": [{ \"text\": \"%s\" }] }" +
-            // "] }",
-            // systemPrompt.replace("\"", "\\\""),
-            // input.replace("\"", "\\\""));
+                    systemPrompt.replace("\"", "\\\""),
+                    input.replace("\"", "\\\""));
 
             ProcessBuilder pb = new ProcessBuilder(
                     "curl",
