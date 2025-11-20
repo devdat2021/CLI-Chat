@@ -96,8 +96,9 @@ CREATE TABLE messages (
     cd CLI-Chat
     ```
 2.  **Download JDBC Driver:** Ensure you have the MySQL JDBC Connector (`mysql-connector-java-[version].jar`) and place it in a location accessible to your build system.
-3.  **Compile:** Compile the Java files (`App.java`, `message.java`, `DBConnection.java`,`LiveChat.java`,`AIChat.java`,`extra.java`).
-4.  **Run:** Execute the compiled `App` class, ensuring the JDBC driver is on the classpath.
+3. **Update credentials:** Ensure you change the API Key, DB Connection info with your actual information before compiling.
+4.  **Compile:** Compile the Java files (`App.java`, `message.java`, `DBConnection.java`,`LiveChat.java`,`AIChat.java`,`extra.java`,).
+5.  **Run:** Execute the compiled `App` class, ensuring the JDBC driver is on the classpath.
 
 
 
