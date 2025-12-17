@@ -4,7 +4,9 @@ public class extra {
   public static String getWeather(String city) {
     StringBuilder output = new StringBuilder();
     try {
-      Process process = Runtime.getRuntime().exec("curl wttr.in/" + city + "?0");
+      // Process process = Runtime.getRuntime().exec("curl wttr.in/" + city + "?0");
+      ProcessBuilder pb = new ProcessBuilder("curl", "wttr.in/" + city + "?0");
+      Process process = pb.start();
       BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
 
       String line;
